@@ -66,33 +66,6 @@ flowchart TD
 | **Query Service**    | `1002` | Maintains the aggregated read model |
 | **Event Bus**        | `4000` | Receives and broadcasts events      |
 
-### Posts Service
-
-* Creates posts
-* Retrieves posts
-* Stores post data
-* Publishes `created_Post` events
-
-### Comments Service
-
-* Creates comments for posts
-* Retrieves comments
-* Stores comment data
-* Publishes `created_Comment` events
-
-### Query Service
-
-* Acts as the **read side**
-* Maintains an aggregated model of posts and comments
-* Updates its read model using events
-
-### Event Bus
-
-* Acts as the central communication layer
-* Receives events from services
-* Broadcasts events to backend services using HTTP
-
----
 
 ## Event Flow
 
@@ -187,18 +160,6 @@ Mini_Project/
 ├── .gitignore
 └── README.md
 ```
-
----
-
-## Service Ports
-
-| Component        |   Port |
-| ---------------- | -----: |
-| React Client     | `3000` |
-| Posts Service    | `1000` |
-| Comments Service | `1001` |
-| Query Service    | `1002` |
-| Event Bus        | `4000` |
 
 ---
 
