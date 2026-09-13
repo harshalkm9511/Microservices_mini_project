@@ -8,10 +8,11 @@ export default () => {
     let [posts, setPosts] = useState({});
 
     const fetchUrl = async () => {
-        let res = await axios.get("http://localhost:1000/posts");
+        let res = await axios.get("http://localhost:1002/posts");
         console.log(res.data);
         setPosts(res.data);
     };
+    
     useEffect(() => {
         fetchUrl();
     }, []);
@@ -26,7 +27,7 @@ export default () => {
 
                     <h2>{post.title}</h2>
                     <div >
-                        <Comments postId={post.id} />
+                        <Comments comments={post.comments} />
                         <h5 className="mt-2">New Comment</h5>
                         <CreateComment postId={post.id} />
                     </div>
