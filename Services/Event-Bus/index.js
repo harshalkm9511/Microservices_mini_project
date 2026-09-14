@@ -11,6 +11,7 @@ app.post("/events", async (req, res) => {
     await axios.post(`http://localhost:1000/events`, { event: req.body });
     await axios.post(`http://localhost:1001/events`, { event: req.body });
     await axios.post(`http://localhost:1002/events`, { event: req.body });
+    await axios.post(`http://localhost:1003/events` , { event: req.body });
 
     res.send({ status: "ok" });
 });
