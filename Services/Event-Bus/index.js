@@ -6,14 +6,24 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.post("/events", async (req, res) => {
+const events = [];
 
-    await axios.post(`http://localhost:1000/events`, { event: req.body });
-    await axios.post(`http://localhost:1001/events`, { event: req.body });
-    await axios.post(`http://localhost:1002/events`, { event: req.body });
-    await axios.post(`http://localhost:1003/events` , { event: req.body });
+app.post("/events", async (req, res) => {
+    const event = req.body;
+    events.push(event);
+
+    await axios.post(`http://localhost:1000/events`, { event });
+    await axios.post(`http://localhost:1001/events`, { event });
+    await axios.post(`http://localhost:1002/events`, { event });
+    await axios.post(`http://localhost:1003/events`, { event }).catch((err) => {
+        console.log("moderation service is down!");
+    });
 
     res.send({ status: "ok" });
+});
+
+app.get("/events", (req, res)=>{
+    res.send(events);
 });
 
 app.listen(4000, () => {

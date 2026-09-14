@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 
@@ -9,12 +10,7 @@ app.use(cors());
 
 const posts = {};
 
-app.get("/posts", (req, res) => {
-    res.send(posts);
-});
-
-app.post("/events", (req, res) => {
-    const event = req.body.event;
+const handleEvent = (event) => {
 
     if (event.type === "created_Post") {
         const post = event.data;
@@ -43,9 +39,27 @@ app.post("/events", (req, res) => {
 
         comment.status = event.data.status;
     }
+}
+
+app.get("/posts", (req, res) => {
+    res.send(posts);
+});
+
+app.post("/events", (req, res) => {
+    const event = req.body.event;
+    handleEvent(event);
     res.send({});
 });
 
-app.listen(1002, () => {
+app.listen(1002, async () => {
+    try {
+        const res = await axios.get("http://localhost:4000/events");
+        console.log(res.data);
+        for (let event of res.data) {
+            handleEvent(event);
+        }
+    } catch (err) {
+        console.log("something went wrong in handling event");
+    };
     console.log("Query Service is running on port 1002");
 });
